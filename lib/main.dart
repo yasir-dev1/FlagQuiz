@@ -1,6 +1,8 @@
+import 'package:flagquiz/controllers/quizcontroller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flagquiz/pages/quizpage.dart';
+import 'package:get/get.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,14 +13,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(Quizcontroller());
     return ScreenUtilInit(
-      designSize: MediaQuery.sizeOf(
-        context,
-      ), // base size (depends on your UI design)
+      designSize: Size(480.0, 1042.6666666666667),
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
-        return MaterialApp(
+        return GetMaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
