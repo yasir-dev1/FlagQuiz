@@ -36,10 +36,9 @@ dependencies:
   cupertino_icons: ^1.0.8
   get: ^4.7.2
   flutter_screenutil: ^5.9.3
-  country_list:
+  flag:
     git:
-      url: git@github.com:yasir-dev1/country_list.git
-  flag: ^7.0.1
+      url: https://github.com/yasir-dev1/flag_flutter.git
 
 dev_dependencies:
   flutter_test:

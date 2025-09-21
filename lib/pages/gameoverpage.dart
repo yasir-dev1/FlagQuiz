@@ -122,7 +122,7 @@ class _GameoverpageState extends State<Gameoverpage> {
                             onPressed: () {
                               if (controller.coins.value >= 100) {
                                 controller.coins.value -= 100;
-                                controller.generateGame(21);
+                                // controller.generateGame(21);
                                 Get.offAll(Quizpage());
                               }
                             },

@@ -18,7 +18,7 @@ class _QuizpageState extends State<Quizpage> {
 
   @override
   void initState() {
-    controller.generateGame(21);
+    controller.generateGame(100);
     super.initState();
   }
 
@@ -34,8 +34,34 @@ class _QuizpageState extends State<Quizpage> {
         elevation: 0,
         leading: Padding(
           padding: EdgeInsets.only(left: 12.w),
-          child: Icon(Icons.language_sharp, size: 28.sp),
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton<String>(
+              icon: Icon(
+                Icons.language_sharp,
+                size: 20.sp,
+                color: Colors.white,
+              ),
+              iconSize: 28.sp, // make sure the size is consistent
+              alignment: Alignment.center, // <-- center the icon
+              dropdownColor: Theme.of(context).colorScheme.primary,
+              style: TextStyle(color: Colors.white, fontSize: 16.sp),
+              items: controller.languages
+                  .map<DropdownMenuItem<String>>(
+                    (lang) => DropdownMenuItem<String>(
+                      value: lang,
+                      child: Text(lang, style: TextStyle(color: Colors.white)),
+                    ),
+                  )
+                  .toList(),
+              onChanged: (String? newLang) {
+                if (newLang != null) {
+                  controller.selectedlang.value = newLang;
+                }
+              },
+            ),
+          ),
         ),
+
         centerTitle: true,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -133,7 +159,7 @@ class _QuizpageState extends State<Quizpage> {
                             child: Container(
                               color: Colors.grey[100],
                               child: Flag.fromString(
-                                controller.quizzes[level.value].correct.isoCode,
+                                controller.quizzes[level.value].correct.code,
                                 height: 10,
                                 width: 100,
                                 fit: BoxFit.fill,
@@ -151,12 +177,12 @@ class _QuizpageState extends State<Quizpage> {
                       height: 500.h,
                       child: GridView.builder(
                         physics: NeverScrollableScrollPhysics(),
-                        itemCount: 4, // number of options
+                        itemCount: 4,
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2, // 2 buttons per row
+                          crossAxisCount: 2,
                           mainAxisSpacing: 12.h,
                           crossAxisSpacing: 12.w,
-                          childAspectRatio: 1, // wider buttons
+                          childAspectRatio: 1,
                         ),
                         itemBuilder: (context, index) {
                           Rx<Color> color = Colors.white.obs;
@@ -168,11 +194,11 @@ class _QuizpageState extends State<Quizpage> {
                                 if (controller
                                         .quizzes[level.value]
                                         .list[index]
-                                        .isoCode ==
+                                        .code ==
                                     controller
                                         .quizzes[level.value]
                                         .correct
-                                        .isoCode) {
+                                        .code) {
                                   color.value = Colors.green;
                                   Future.delayed(
                                     const Duration(milliseconds: 200),
@@ -210,7 +236,7 @@ class _QuizpageState extends State<Quizpage> {
                                     controller
                                         .quizzes[level.value]
                                         .list[index]
-                                        .name,
+                                        .names[controller.selectedlang.value],
                                     textAlign: TextAlign.center,
                                     softWrap: true,
                                     style: TextStyle(

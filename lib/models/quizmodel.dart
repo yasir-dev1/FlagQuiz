@@ -1,24 +1,24 @@
 import 'dart:math';
 
-import 'package:country_list/country_list.dart';
+import 'package:flagquiz/models/countrymodel.dart';
 
 class Quizmodel {
-  final Country correct;
-  final List<Country> list;
+  final Countrymodel correct;
+  final List<Countrymodel> list;
 
   Quizmodel({required this.correct, required this.list});
 
-  static Quizmodel generatequiz(List<Country> contries) {
-    List<Country> list = <Country>[];
-    Country country = contries[Random().nextInt(contries.length)];
+  static Quizmodel generatequiz(List<Countrymodel> contries) {
+    List<Countrymodel> list = <Countrymodel>[];
+    Countrymodel country = contries[Random().nextInt(contries.length)];
     list.add(country);
     int i = 0;
     while (i < 3) {
-      Country c = contries[Random().nextInt(contries.length)];
-      if (!list.contains(c) && c.isoCode != "IL") {
+      Countrymodel c = contries[Random().nextInt(contries.length)];
+      if (!list.contains(c) && c.code != "IL") {
         list.add(c);
         list.shuffle();
-        i++; // only increment if a new country was added
+        i++;
       }
     }
     list.shuffle();
